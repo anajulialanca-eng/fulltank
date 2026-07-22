@@ -1,8 +1,22 @@
-FULLTANK — SITE PRONTO
+FULLTANK V3 — MULTIVEÍCULOS
 
-1. Para testar no computador, abra index.html.
-2. Para publicar, envie todos os arquivos desta pasta para uma hospedagem.
-3. No iPhone, abra o endereço no Safari.
-4. Toque em Compartilhar > Adicionar à Tela de Início.
+Arquivos para enviar ao GitHub:
+- index.html
+- manifest.webmanifest
+- service-worker.js
+- icon-192.png
+- icon-512.png
 
-Os dados ficam salvos no navegador. Faça backup de vez em quando.
+Novidades:
+- Cadastro de vários veículos
+- Carro, moto, caminhonete ou outro
+- Abastecimentos separados por veículo
+- Histórico separado por veículo
+- Manutenções separadas por veículo
+- Gráfico e estatísticas de cada veículo
+- Backup, restauração e CSV
+- Modo escuro
+- Instalação na tela inicial do iPhone
+
+IMPORTANTE:
+Extraia o ZIP e envie os 5 arquivos principais para a raiz do repositório no GitHub.

@@ -4,194 +4,138 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<meta name="theme-color" content="#111827">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>FullTank</title>
+<title>FullTank V4 V4</title>
 <style>
-:root{
-  --bg:#f4f7fb;--card:#ffffff;--text:#142033;--muted:#718096;--line:#e6eaf0;
-  --orange:#ff7a00;--orange2:#ffb000;--green:#1f9d55;--danger:#c53030;
-  --shadow:0 18px 50px rgba(20,32,51,.10)
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-background:
-radial-gradient(circle at top right,rgba(255,176,0,.20),transparent 24rem),
-linear-gradient(180deg,#fff8ef 0,#f4f7fb 340px);
-color:var(--text)}
-.app{max-width:760px;margin:auto;padding:calc(22px + env(safe-area-inset-top)) 16px calc(36px + env(safe-area-inset-bottom))}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.brand small{display:block;color:var(--orange);font-size:11px;font-weight:900;letter-spacing:1.35px}
-.brand h1{margin:2px 0 0;font-size:44px;letter-spacing:-2.2px}
-.logo{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,var(--orange),var(--orange2));display:grid;place-items:center;font-size:28px;box-shadow:0 12px 25px rgba(255,122,0,.28)}
-.hero{background:linear-gradient(135deg,#182235,#111827);color:#fff;border-radius:26px;padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,176,0,.16);right:-50px;top:-70px}
-.hero small{opacity:.72;font-size:12px}
-.hero strong{display:block;font-size:36px;margin-top:8px;letter-spacing:-1.4px}
-.hero-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.hero-mini{padding:13px 14px;border-radius:16px;background:rgba(255,255,255,.09);backdrop-filter:blur(8px)}
-.hero-mini span{display:block;font-size:11px;opacity:.72;margin-bottom:5px}.hero-mini b{font-size:16px}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:19px;margin-top:15px;box-shadow:var(--shadow)}
-.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.eyebrow{color:var(--orange);font-size:10px;font-weight:900;letter-spacing:1.25px}
-h2{margin:3px 0 0;font-size:23px;letter-spacing:-.5px}
-button,input{font:inherit}
-button{cursor:pointer}
-.link{border:0;background:transparent;color:var(--orange);font-weight:850;padding:8px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:17px}
-label span{display:block;font-size:12px;font-weight:750;color:var(--muted);margin-bottom:6px}
-input{width:100%;padding:14px 13px;border:1px solid var(--line);border-radius:14px;background:#f8fafc;color:var(--text);outline:none}
-input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,122,0,.12)}
-.preview{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
-.preview div{padding:14px;border-radius:16px;background:#f8fafc;border:1px solid var(--line)}
-.preview span{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}
-.preview strong{font-size:20px}
-.save{width:100%;border:0;border-radius:15px;padding:15px;color:#fff;font-weight:900;background:linear-gradient(135deg,var(--orange),var(--orange2));box-shadow:0 10px 25px rgba(255,122,0,.25)}
-.msg{min-height:18px;margin:10px 2px 0;font-size:13px}.ok{color:var(--green)}.err{color:var(--danger)}
-.empty{text-align:center;padding:30px 10px;color:var(--muted)}.empty .icon{font-size:34px;margin-bottom:8px}
-.item{margin-top:11px;padding:15px;border:1px solid var(--line);border-radius:17px;background:#fafbfc}
-.item-top{display:flex;justify-content:space-between;align-items:center}
-.item-date{font-size:11px;color:var(--muted);margin-bottom:4px}.item strong{font-size:19px}
-.del{border:0;background:transparent;color:var(--danger);font-weight:800}
-.details{display:grid;grid-template-columns:1fr 1fr;gap:7px 12px;margin-top:11px;color:var(--muted);font-size:13px}
-.actions{display:flex;flex-wrap:wrap;gap:9px}
-.secondary,.danger{border:1px solid var(--line);border-radius:13px;padding:11px 13px;font-weight:800;background:#f8fafc;color:var(--text)}
-.danger{background:#fff5f5;color:var(--danger)}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0 6px}
-@media(max-width:620px){.grid{grid-template-columns:1fr}.brand h1{font-size:38px}.hero strong{font-size:32px}}
+:root{--bg:#f4f7fb;--card:#fff;--soft:#f8fafc;--text:#142033;--muted:#718096;--line:#e6eaf0;--orange:#10b981;--orange2:#34d399;--green:#168a4b;--red:#c53030;--shadow:0 14px 36px rgba(20,32,51,.10)}
+[data-theme="dark"]{--bg:#0d1421;--card:#151f2e;--soft:#101927;--text:#f6f8fb;--muted:#9aa9bd;--line:#29364a;--shadow:0 14px 36px rgba(0,0,0,.28)}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(circle at top right,rgba(255,176,0,.18),transparent 25rem),var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}.app{max-width:940px;margin:auto;padding:calc(18px + env(safe-area-inset-top)) 14px calc(95px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.brand small,.eyebrow{color:var(--orange);font-size:10px;font-weight:900;letter-spacing:1.25px}.brand h1{margin:2px 0 0;font-size:39px;letter-spacing:-2px}
+.top-actions{display:flex;gap:8px}.iconbtn{width:44px;height:44px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--text);cursor:pointer}
+.vehicle-switch{display:flex;gap:9px;overflow:auto;padding:2px 1px 12px;scrollbar-width:none}.vehicle-switch::-webkit-scrollbar{display:none}.vehicle-pill{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:10px 13px;font-weight:800;cursor:pointer}.vehicle-pill.active{background:var(--orange);border-color:var(--orange);color:white}.vehicle-pill.add{border-style:dashed}
+.hero{background:linear-gradient(135deg,#182235,#111827);color:white;border-radius:27px;padding:21px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:rgba(255,176,0,.17);right:-55px;top:-75px}.hero-top{display:flex;justify-content:space-between;align-items:start;gap:12px;position:relative;z-index:1}.vehicle-name{font-size:13px;opacity:.76}.hero strong{display:block;font-size:35px;margin-top:6px;letter-spacing:-1.5px}.badge{background:rgba(255,255,255,.11);padding:8px 11px;border-radius:12px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px;position:relative;z-index:1}.stat{background:rgba(255,255,255,.09);padding:12px;border-radius:15px}.stat span{display:block;font-size:10px;opacity:.7;margin-bottom:4px}.stat b{font-size:15px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:23px;padding:18px;margin-top:14px;box-shadow:var(--shadow)}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.panel h2{font-size:22px;margin:3px 0 0}.link{border:0;background:none;color:var(--orange);font-weight:850;cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}.span2{grid-column:1/-1}label span{display:block;color:var(--muted);font-size:12px;font-weight:750;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--soft);color:var(--text);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,122,0,.12)}textarea{min-height:80px;resize:vertical}
+.checkrow{display:flex;align-items:center;gap:9px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}.checkrow input{width:auto}.preview{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:15px 0}.preview div,.mini{padding:13px;border:1px solid var(--line);border-radius:15px;background:var(--soft)}.preview span,.mini span{display:block;font-size:10px;color:var(--muted);margin-bottom:5px}.preview strong,.mini strong{font-size:18px}
+.primary{width:100%;border:0;border-radius:15px;padding:14px;color:white;background:linear-gradient(135deg,var(--orange),var(--orange2));font-weight:900;cursor:pointer;box-shadow:0 9px 23px rgba(255,122,0,.23)}.secondary,.danger{border:1px solid var(--line);border-radius:13px;padding:10px 12px;background:var(--soft);color:var(--text);font-weight:800;cursor:pointer}.danger{color:var(--red);background:#fff5f5}[data-theme="dark"] .danger{background:#2a1518}.msg{min-height:16px;font-size:12px;margin:9px 2px 0}.ok{color:var(--green)}.err{color:var(--red)}
+.tabs{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(940px,100%);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--line);z-index:10}.tab{border:0;background:none;color:var(--muted);font-size:11px;font-weight:800;padding:6px;cursor:pointer}.tab i{display:block;font-style:normal;font-size:21px;margin-bottom:2px}.tab.active{color:var(--orange)}
+.page{display:none}.page.active{display:block}.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}canvas{width:100%;height:240px;display:block}.empty{text-align:center;color:var(--muted);padding:27px 10px}.item{margin-top:10px;border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--soft)}.itemtop{display:flex;justify-content:space-between;align-items:start;gap:10px}.date{font-size:11px;color:var(--muted)}.item strong{font-size:18px}.details{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;margin-top:10px;color:var(--muted);font-size:12px}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.chip{font-size:10px;font-weight:800;border-radius:999px;padding:5px 8px;background:rgba(255,122,0,.12);color:var(--orange)}.actions{display:flex;gap:8px;flex-wrap:wrap}.filters{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}.maintenance-due{border-left:4px solid var(--orange)}.maintenance-late{border-left:4px solid var(--red)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:30;display:none;align-items:flex-end;justify-content:center}.modal.open{display:flex}.sheet{width:min(940px,100%);max-height:90vh;overflow:auto;background:var(--card);border-radius:25px 25px 0 0;padding:20px}.sheethead{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:none;font-size:25px;color:var(--text);cursor:pointer}.vehicle-card{display:flex;justify-content:space-between;gap:10px;align-items:center}.type-icon{font-size:30px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:18px}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}.grid,.filters{grid-template-columns:1fr}.span2{grid-column:auto}.preview,.cards3{grid-template-columns:1fr 1fr}.brand h1{font-size:35px}}
 </style>
 </head>
 <body>
 <div class="app">
-<header>
-  <div class="brand"><small>CONTROLE DE ABASTECIMENTOS</small><h1>FullTank</h1></div>
-  <div class="logo">⛽</div>
-</header>
-
+<header><div class="brand"><small>SEU CONTROLE AUTOMOTIVO</small><h1>FullTank</h1></div><div class="top-actions"><button class="iconbtn" id="themeBtn">🌙</button><button class="iconbtn" id="manageVehiclesBtn">🚘</button></div></header>
+<div class="vehicle-switch" id="vehicleSwitch"></div>
 <section class="hero">
-  <small>MÉDIA MAIS RECENTE</small>
-  <strong id="lastAvg">-- km/L</strong>
-  <div class="hero-row">
-    <div class="hero-mini"><span>TOTAL GASTO</span><b id="totalSpent">R$ 0,00</b></div>
-    <div class="hero-mini"><span>KM REGISTRADOS</span><b id="totalKm">0 km</b></div>
-  </div>
+ <div class="hero-top"><div><div class="vehicle-name" id="heroVehicle">Cadastre um veículo</div><strong id="heroAvg">-- km/L</strong><div class="vehicle-name">média mais recente</div></div><div class="badge" id="heroFuel">Sem registros</div></div>
+ <div class="stats"><div class="stat"><span>GASTO NO MÊS</span><b id="monthSpent">R$ 0,00</b></div><div class="stat"><span>CUSTO / KM</span><b id="costKm">R$ 0,00</b></div><div class="stat"><span>MÉDIA GERAL</span><b id="generalAvg">-- km/L</b></div><div class="stat"><span>KM ATUAL</span><b id="currentKm">--</b></div></div>
+</section>
+<main>
+<section class="page active" data-page="home">
+ <div class="panel"><div class="panel-head"><div><div class="eyebrow">RESUMO DO VEÍCULO</div><h2>Visão geral</h2></div></div><div class="cards3"><div class="mini"><span>MELHOR MÉDIA</span><strong id="bestAvg">--</strong></div><div class="mini"><span>TOTAL DE LITROS</span><strong id="totalLiters">0 L</strong></div><div class="mini"><span>TOTAL GASTO</span><strong id="allSpent">R$ 0,00</strong></div></div></div>
+ <div class="panel"><div class="panel-head"><div><div class="eyebrow">EVOLUÇÃO</div><h2>Média de consumo</h2></div></div><canvas id="avgChart"></canvas><div id="chartEmpty" class="empty">Salve pelo menos dois abastecimentos neste veículo.</div></div>
+ <div class="panel"><div class="panel-head"><div><div class="eyebrow">PRÓXIMOS CUIDADOS</div><h2>Manutenções</h2></div><button class="link" data-go="maintenance">Ver todas</button></div><div id="homeMaintenance"></div></div>
 </section>
 
-<section class="panel">
-  <div class="panel-head">
-    <div><div class="eyebrow">NOVO REGISTRO</div><h2>Abastecimento</h2></div>
-    <button class="link" id="lastKmBtn">Usar último KM</button>
-  </div>
-
-  <form id="form">
-    <div class="grid">
-      <label><span>KM anterior</span><input id="prev" type="number" step="0.1" required placeholder="Ex.: 42500"></label>
-      <label><span>KM atual</span><input id="curr" type="number" step="0.1" required placeholder="Ex.: 42920"></label>
-      <label><span>Litros abastecidos</span><input id="liters" type="number" step="0.01" required placeholder="Ex.: 42,50"></label>
-      <label><span>Valor total</span><input id="amount" type="number" step="0.01" required placeholder="Ex.: 255,00"></label>
-      <label><span>Preço por litro</span><input id="ppl" readonly placeholder="Automático"></label>
-      <label><span>Data</span><input id="date" type="date" required></label>
-      <label><span>Posto</span><input id="station" type="text" placeholder="Ex.: Posto Avenida"></label>
-      <label><span>Combustível</span><input id="fuel" type="text" placeholder="Ex.: Gasolina"></label>
-    </div>
-
-    <div class="preview">
-      <div><span>KM rodados</span><strong id="kmPreview">0 km</strong></div>
-      <div><span>Média</span><strong id="avgPreview">0 km/L</strong></div>
-    </div>
-
-    <button class="save">Salvar abastecimento</button>
-    <p id="msg" class="msg"></p>
-  </form>
+<section class="page" data-page="fuel">
+ <div class="panel"><div class="panel-head"><div><div class="eyebrow">NOVO REGISTRO</div><h2>Abastecimento</h2></div><button class="link" id="lastKmBtn">Usar último KM</button></div>
+ <form id="fuelForm"><div class="grid">
+  <label><span>Veículo</span><select id="fuelVehicle"></select></label><label><span>Data</span><input id="fuelDate" type="date" required></label>
+  <label><span>KM anterior</span><input id="prevKm" type="number" step="0.1" required></label><label><span>KM atual</span><input id="newKm" type="number" step="0.1" required></label>
+  <label><span>Litros abastecidos</span><input id="liters" type="number" step="0.01" required></label><label><span>Valor total</span><input id="amount" type="number" step="0.01" required></label>
+  <label><span>Preço por litro</span><input id="priceLiter" readonly></label><label><span>Posto</span><input id="station" placeholder="Ex.: Shell, Ipiranga..."></label>
+  <label><span>Combustível</span><select id="fuelType"><option>Gasolina comum</option><option>Gasolina aditivada</option><option>Etanol</option><option>Diesel</option><option>GNV</option></select></label><label><span>Motorista</span><input id="driver" placeholder="Ex.: Ana, Pai..."></label>
+  <label class="checkrow span2"><input id="fullTank" type="checkbox" checked><span style="margin:0">Completei o tanque</span></label>
+  <label class="span2"><span>Observações</span><textarea id="fuelNotes" placeholder="Viagem, trânsito, calibragem..."></textarea></label>
+ </div><div class="preview"><div><span>KM RODADOS</span><strong id="kmPreview">0 km</strong></div><div><span>CONSUMO</span><strong id="avgPreview">0 km/L</strong></div><div><span>CUSTO / KM</span><strong id="costPreview">R$ 0,00</strong></div></div><button class="primary">Salvar abastecimento</button><div id="fuelMsg" class="msg"></div></form></div>
 </section>
 
-<section class="panel">
-  <div class="panel-head">
-    <div><div class="eyebrow">SEUS DADOS</div><h2>Histórico</h2></div>
-    <button class="link" id="exportBtn">Exportar</button>
-  </div>
-  <div id="empty" class="empty"><div class="icon">🚗</div>Nenhum abastecimento cadastrado ainda.</div>
-  <div id="list"></div>
+<section class="page" data-page="history">
+ <div class="panel"><div class="panel-head"><div><div class="eyebrow">REGISTROS</div><h2>Histórico</h2></div><button class="link" id="csvBtn">Exportar CSV</button></div><div class="filters"><input id="searchHistory" placeholder="Buscar posto, motorista..."><select id="historyVehicle"></select></div><div id="historyList"></div></div>
 </section>
 
-<section class="panel">
-  <div class="actions">
-    <button class="secondary" id="backupBtn">Baixar backup</button>
-    <label class="secondary" style="cursor:pointer">Restaurar backup<input id="restore" type="file" accept=".json" hidden></label>
-    <button class="danger" id="clearBtn">Apagar tudo</button>
-  </div>
+<section class="page" data-page="maintenance">
+ <div class="panel"><div class="panel-head"><div><div class="eyebrow">CONTROLE</div><h2>Nova manutenção</h2></div></div>
+ <form id="maintenanceForm"><div class="grid">
+  <label><span>Veículo</span><select id="maintenanceVehicle"></select></label><label><span>Tipo</span><select id="maintenanceType"><option>Troca de óleo</option><option>Revisão</option><option>Pneus</option><option>Freios</option><option>Filtro</option><option>Seguro</option><option>IPVA/licenciamento</option><option>Outro</option></select></label>
+  <label><span>Descrição</span><input id="maintenanceDesc" required placeholder="Ex.: Óleo e filtro"></label><label><span>Última troca/revisão no KM</span><input id="maintenanceLastKm" type="number" step="1"></label>
+  <label><span>Próxima no KM</span><input id="maintenanceNextKm" type="number" step="1"></label><label><span>Próxima data</span><input id="maintenanceDate" type="date"></label>
+  <label><span>Valor</span><input id="maintenanceCost" type="number" step="0.01"></label><label><span>Observações</span><input id="maintenanceNotes"></label>
+ </div><button class="primary">Salvar manutenção</button><div id="maintenanceMsg" class="msg"></div></form></div>
+ <div class="panel"><div class="panel-head"><div><div class="eyebrow">AGENDA</div><h2>Manutenções cadastradas</h2></div></div><div id="maintenanceList"></div></div>
 </section>
-
-<footer>FullTank • seus dados ficam salvos neste navegador</footer>
+</main>
+<footer>FullTank • seus dados ficam salvos neste aparelho</footer>
 </div>
 
+<nav class="tabs"><button class="tab active" data-tab="home"><i>🏠</i>Início</button><button class="tab" data-tab="fuel"><i>⛽</i>Abastecer</button><button class="tab" data-tab="history"><i>🧾</i>Histórico</button><button class="tab" data-tab="maintenance"><i>🔧</i>Revisões</button></nav>
+
+<div class="modal" id="vehiclesModal"><div class="sheet">
+ <div class="sheethead"><div><div class="eyebrow">GARAGEM</div><h2>Meus veículos</h2></div><button class="close" id="closeVehicles">×</button></div>
+ <div id="vehiclesList"></div>
+ <div class="panel" style="box-shadow:none"><div class="eyebrow">CADASTRAR OU EDITAR</div><form id="vehicleForm"><input id="vehicleEditId" type="hidden"><div class="grid">
+  <label><span>Tipo</span><select id="vehicleType"><option value="car">🚗 Carro</option><option value="motorcycle">🏍️ Moto</option><option value="pickup">🛻 Caminhonete</option><option value="other">🚘 Outro</option></select></label>
+  <label><span>Apelido</span><input id="vehicleName" required placeholder="Ex.: Corolla do pai"></label>
+  <label><span>Modelo</span><input id="vehicleModel" placeholder="Ex.: Corolla XEi"></label><label><span>Ano</span><input id="vehicleYear" type="number"></label>
+  <label><span>Placa</span><input id="vehiclePlate" maxlength="8"></label><label><span>KM atual</span><input id="vehicleKm" type="number" step="0.1"></label>
+ </div><button class="primary">Salvar veículo</button></form></div>
+ <div class="panel" style="box-shadow:none"><div class="actions"><button class="secondary" id="backupBtn" type="button">Baixar backup</button><label class="secondary" style="cursor:pointer">Restaurar backup<input id="restoreFile" type="file" accept=".json" hidden></label><button class="danger" id="clearBtn" type="button">Apagar tudo</button></div></div>
+</div></div>
+
 <script>
-const KEY='fulltank_dados_v2';
-let records=JSON.parse(localStorage.getItem(KEY)||'[]');
+const KEY='fulltank_v3_multiveiculos';
 const $=id=>document.getElementById(id);
-const money=v=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0);
-const num=(v,d=1)=>new Intl.NumberFormat('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v||0);
+const money=v=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(v)||0);
+const num=(v,d=1)=>new Intl.NumberFormat('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(Number(v)||0);
 const today=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
-$('date').value=today();
-
-function calc(){
- const p=+$('prev').value,c=+$('curr').value,l=+$('liters').value,a=+$('amount').value;
- const km=c>p?c-p:0,avg=l>0?km/l:0,ppl=l>0?a/l:0;
- $('kmPreview').textContent=num(km,1)+' km';
- $('avgPreview').textContent=num(avg,2)+' km/L';
- $('ppl').value=ppl>0?money(ppl):'';
- return {p,c,l,a,km,avg,ppl};
-}
-['prev','curr','liters','amount'].forEach(id=>$(id).addEventListener('input',calc));
-
-function persist(){localStorage.setItem(KEY,JSON.stringify(records))}
-function latest(){return [...records].sort((a,b)=>b.createdAt-a.createdAt)[0]}
-function useLastKm(){const r=latest();if(r){$('prev').value=r.c;calc()}}
-$('lastKmBtn').onclick=useLastKm;
-
-function render(){
- const sorted=[...records].sort((a,b)=>b.createdAt-a.createdAt);
- const last=sorted[0];
- $('lastAvg').textContent=last?num(last.avg,2)+' km/L':'-- km/L';
- $('totalSpent').textContent=money(records.reduce((s,r)=>s+r.a,0));
- $('totalKm').textContent=num(records.reduce((s,r)=>s+r.km,0),1)+' km';
- $('empty').style.display=sorted.length?'none':'block';
- $('list').innerHTML='';
- sorted.forEach(r=>{
-  const el=document.createElement('div');el.className='item';
-  el.innerHTML=`<div class="item-top"><div><div class="item-date">${new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR')}</div><strong>${num(r.avg,2)} km/L</strong></div><button class="del">Excluir</button></div><div class="details"><span>${num(r.km,1)} km rodados</span><span>${num(r.l,2)} litros</span><span>${money(r.a)}</span><span>${money(r.ppl)}/L</span><span>${r.station||'Posto não informado'}</span><span>${r.fuel||'Combustível não informado'}</span></div>`;
-  el.querySelector('.del').onclick=()=>{if(confirm('Excluir este registro?')){records=records.filter(x=>x.id!==r.id);persist();render();useLastKm()}};
-  $('list').appendChild(el);
- });
-}
-
-$('form').onsubmit=e=>{
- e.preventDefault();const x=calc();
- if(x.c<=x.p){$('msg').textContent='O KM atual precisa ser maior que o anterior.';$('msg').className='msg err';return}
- records.push({...x,id:Date.now(),date:$('date').value,station:$('station').value.trim(),fuel:$('fuel').value.trim(),createdAt:Date.now()});
- persist();render();$('form').reset();$('date').value=today();$('prev').value=x.c;calc();
- $('msg').textContent='Abastecimento salvo com sucesso!';$('msg').className='msg ok';
-};
-
-function download(name,text,type){
- const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');
- a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);
-}
-$('backupBtn').onclick=()=>download('fulltank-backup.json',JSON.stringify(records,null,2),'application/json');
-$('exportBtn').onclick=()=>{
- const rows=[['Data','KM anterior','KM atual','KM rodados','Litros','Valor','Preço/L','Média km/L','Posto','Combustível'],...records.map(r=>[r.date,r.p,r.c,r.km,r.l,r.a,r.ppl,r.avg,r.station||'',r.fuel||''])];
- download('fulltank-historico.csv','\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(';')).join('\n'),'text/csv;charset=utf-8');
-};
-$('restore').onchange=async e=>{
- try{const d=JSON.parse(await e.target.files[0].text());if(!Array.isArray(d))throw 0;records=d;persist();render();useLastKm();alert('Backup restaurado!')}catch{alert('Arquivo inválido.')}
- e.target.value='';
-};
-$('clearBtn').onclick=()=>{if(confirm('Apagar todos os registros?')){records=[];persist();render();$('form').reset();$('date').value=today();calc()}};
-
-render();useLastKm();calc();
+const icon=t=>({car:'🚗',motorcycle:'🏍️',pickup:'🛻',other:'🚘'}[t]||'🚘');
+let state=JSON.parse(localStorage.getItem(KEY)||'null')||{vehicles:[],activeVehicleId:null,fuelings:[],maintenance:[],theme:'light'};
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function activeVehicle(){return state.vehicles.find(v=>v.id===state.activeVehicleId)||state.vehicles[0]||null}
+function vehicleFuelings(id=state.activeVehicleId){return state.fuelings.filter(r=>r.vehicleId===id)}
+function vehicleMaintenance(id=state.activeVehicleId){return state.maintenance.filter(r=>r.vehicleId===id)}
+function currentKm(id=state.activeVehicleId){const v=state.vehicles.find(x=>x.id===id);return Math.max(Number(v?.km)||0,...vehicleFuelings(id).map(r=>Number(r.currentKm)||0),0)}
+function ensureActive(){if(!state.activeVehicleId&&state.vehicles[0])state.activeVehicleId=state.vehicles[0].id}
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===page));document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===page));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>go(b.dataset.tab));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+function setTheme(){document.documentElement.dataset.theme=state.theme;$('themeBtn').textContent=state.theme==='dark'?'☀️':'🌙'}$('themeBtn').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark';save();setTheme();drawChart()}
+function selectVehicle(id){state.activeVehicleId=id;save();renderAll()}
+function renderVehicleSwitch(){const wrap=$('vehicleSwitch');wrap.innerHTML='';state.vehicles.forEach(v=>{const b=document.createElement('button');b.className='vehicle-pill'+(v.id===state.activeVehicleId?' active':'');b.textContent=icon(v.type)+' '+v.name;b.onclick=()=>selectVehicle(v.id);wrap.appendChild(b)});const add=document.createElement('button');add.className='vehicle-pill add';add.textContent='+ Adicionar veículo';add.onclick=openVehicles;wrap.appendChild(add)}
+function fillVehicleSelects(){const opts=state.vehicles.map(v=>`<option value="${v.id}">${icon(v.type)} ${v.name}</option>`).join('');['fuelVehicle','historyVehicle','maintenanceVehicle'].forEach(id=>{$(id).innerHTML=opts||'<option value="">Cadastre um veículo</option>'});if(state.activeVehicleId){$('fuelVehicle').value=state.activeVehicleId;$('historyVehicle').value=state.activeVehicleId;$('maintenanceVehicle').value=state.activeVehicleId}}
+function latestFuel(id=state.activeVehicleId){return [...vehicleFuelings(id)].sort((a,b)=>b.createdAt-a.createdAt)[0]}
+function renderDashboard(){const v=activeVehicle(),f=[...vehicleFuelings()].sort((a,b)=>a.createdAt-b.createdAt),last=f.at(-1);$('heroVehicle').textContent=v?icon(v.type)+' '+v.name:'Cadastre um veículo';$('heroAvg').textContent=last?num(last.avg,2)+' km/L':'-- km/L';$('heroFuel').textContent=last?last.fuelType:'Sem registros';const now=new Date(),month=f.filter(r=>{const d=new Date(r.date+'T12:00:00');return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()});const totalAmount=f.reduce((s,r)=>s+(+r.amount||0),0),totalKm=f.reduce((s,r)=>s+(+r.km||0),0),totalL=f.reduce((s,r)=>s+(+r.liters||0),0);$('monthSpent').textContent=money(month.reduce((s,r)=>s+(+r.amount||0),0));$('costKm').textContent=money(totalKm?totalAmount/totalKm:0);$('generalAvg').textContent=totalL?num(totalKm/totalL,2)+' km/L':'-- km/L';$('currentKm').textContent=currentKm()?num(currentKm(),0):'--';$('bestAvg').textContent=f.length?num(Math.max(...f.map(r=>+r.avg||0)),2)+' km/L':'--';$('totalLiters').textContent=num(totalL,1)+' L';$('allSpent').textContent=money(totalAmount);drawChart();renderHomeMaintenance()}
+function drawChart(){const canvas=$('avgChart'),data=[...vehicleFuelings()].sort((a,b)=>a.createdAt-b.createdAt).slice(-10),empty=$('chartEmpty'),dpr=window.devicePixelRatio||1,w=canvas.clientWidth,h=240;canvas.width=w*dpr;canvas.height=h*dpr;const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);if(data.length<2){canvas.style.display='none';empty.style.display='block';return}canvas.style.display='block';empty.style.display='none';const vals=data.map(r=>+r.avg||0),min=Math.max(0,Math.min(...vals)-1),max=Math.max(...vals)+1,pad={l:38,r:12,t:20,b:35},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b,styles=getComputedStyle(document.documentElement),line=styles.getPropertyValue('--line'),muted=styles.getPropertyValue('--muted'),orange=styles.getPropertyValue('--orange');ctx.strokeStyle=line;ctx.fillStyle=muted;ctx.font='11px sans-serif';for(let i=0;i<4;i++){const y=pad.t+ch*i/3;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillText(num(max-(max-min)*i/3,1),2,y+4)}const pts=data.map((r,i)=>({x:pad.l+cw*i/(data.length-1),y:pad.t+ch*(max-r.avg)/(max-min)}));ctx.strokeStyle=orange;ctx.lineWidth=3;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();pts.forEach((p,i)=>{ctx.fillStyle=orange;ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fill();ctx.fillStyle=muted;ctx.fillText(new Date(data[i].date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}),Math.max(0,p.x-15),h-10)})}
+$('fuelDate').value=today();
+function calcFuel(){const p=+$('prevKm').value,c=+$('newKm').value,l=+$('liters').value,a=+$('amount').value,km=c>p?c-p:0,avg=l>0?km/l:0,priceLiter=l>0?a/l:0,costKm=km>0?a/km:0;$('kmPreview').textContent=num(km,1)+' km';$('avgPreview').textContent=num(avg,2)+' km/L';$('costPreview').textContent=money(costKm);$('priceLiter').value=priceLiter?money(priceLiter):'';return{p,c,l,a,km,avg,priceLiter,costKm}}
+['prevKm','newKm','liters','amount'].forEach(id=>$(id).addEventListener('input',calcFuel));$('lastKmBtn').onclick=()=>{$('prevKm').value=currentKm($('fuelVehicle').value)||'';calcFuel()};$('fuelVehicle').onchange=()=>{$('prevKm').value=currentKm($('fuelVehicle').value)||'';calcFuel()}
+$('fuelForm').onsubmit=e=>{e.preventDefault();const vehicleId=$('fuelVehicle').value,x=calcFuel();if(!vehicleId){alert('Cadastre um veículo primeiro.');openVehicles();return}if(x.c<=x.p){$('fuelMsg').textContent='O KM atual precisa ser maior que o anterior.';$('fuelMsg').className='msg err';return}state.fuelings.push({id:Date.now(),vehicleId,date:$('fuelDate').value,prevKm:x.p,currentKm:x.c,liters:x.l,amount:x.a,km:x.km,avg:x.avg,priceLiter:x.priceLiter,costKm:x.costKm,station:$('station').value.trim(),fuelType:$('fuelType').value,driver:$('driver').value.trim(),fullTank:$('fullTank').checked,notes:$('fuelNotes').value.trim(),createdAt:Date.now()});const v=state.vehicles.find(v=>v.id===vehicleId);if(v)v.km=x.c;state.activeVehicleId=vehicleId;save();e.target.reset();$('fuelDate').value=today();$('fullTank').checked=true;renderAll();go('home')}
+function renderHistory(){const vehicleId=$('historyVehicle').value||state.activeVehicleId,q=$('searchHistory').value.toLowerCase(),list=[...vehicleFuelings(vehicleId)].sort((a,b)=>b.createdAt-a.createdAt).filter(r=>!q||[r.station,r.fuelType,r.driver,r.notes].join(' ').toLowerCase().includes(q));$('historyList').innerHTML=list.length?'':'<div class="empty">Nenhum abastecimento encontrado.</div>';list.forEach(r=>{const el=document.createElement('div');el.className='item';el.innerHTML=`<div class="itemtop"><div><div class="date">${new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR')}</div><strong>${num(r.avg,2)} km/L</strong></div><button class="link del">Excluir</button></div><div class="details"><span>${num(r.km,1)} km rodados</span><span>${num(r.liters,2)} litros</span><span>${money(r.amount)}</span><span>${money(r.priceLiter)}/L</span><span>${r.station||'Posto não informado'}</span><span>${r.driver||'Motorista não informado'}</span></div><div class="chips"><span class="chip">${r.fuelType}</span>${r.fullTank?'<span class="chip">Tanque cheio</span>':''}</div>${r.notes?`<div class="date" style="margin-top:9px">${r.notes}</div>`:''}`;el.querySelector('.del').onclick=()=>{if(confirm('Excluir este abastecimento?')){state.fuelings=state.fuelings.filter(x=>x.id!==r.id);save();renderAll()}};$('historyList').appendChild(el)})}
+$('searchHistory').oninput=renderHistory;$('historyVehicle').onchange=renderHistory;
+$('maintenanceForm').onsubmit=e=>{e.preventDefault();const vehicleId=$('maintenanceVehicle').value;if(!vehicleId){alert('Cadastre um veículo primeiro.');openVehicles();return}state.maintenance.push({id:Date.now(),vehicleId,type:$('maintenanceType').value,desc:$('maintenanceDesc').value.trim(),lastKm:+$('maintenanceLastKm').value||0,nextKm:+$('maintenanceNextKm').value||0,nextDate:$('maintenanceDate').value,cost:+$('maintenanceCost').value||0,notes:$('maintenanceNotes').value.trim(),createdAt:Date.now()});save();e.target.reset();renderAll()}
+function maintenanceClass(r){const km=currentKm(r.vehicleId),todayDate=new Date();todayDate.setHours(0,0,0,0),date=r.nextDate?new Date(r.nextDate+'T12:00:00'):null;if((r.nextKm&&km>=r.nextKm)||(date&&date<todayDate))return'maintenance-late';if((r.nextKm&&r.nextKm-km<=1000)||(date&&(date-todayDate)/86400000<=30))return'maintenance-due';return''}
+function maintenanceHTML(r){const v=state.vehicles.find(x=>x.id===r.vehicleId);return `<div class="item ${maintenanceClass(r)}"><div class="itemtop"><div><div class="date">${v?icon(v.type)+' '+v.name:''}</div><strong>${r.type}</strong><div>${r.desc}</div></div><button class="link del">Excluir</button></div><div class="details"><span>Próximo KM: ${r.nextKm?num(r.nextKm,0):'—'}</span><span>Próxima data: ${r.nextDate?new Date(r.nextDate+'T12:00:00').toLocaleDateString('pt-BR'):'—'}</span><span>Valor: ${money(r.cost)}</span><span>${r.notes||''}</span></div></div>`}
+function renderMaintenance(){const list=[...state.maintenance].sort((a,b)=>b.createdAt-a.createdAt);$('maintenanceList').innerHTML=list.length?'':'<div class="empty">Nenhuma manutenção cadastrada.</div>';list.forEach(r=>{const w=document.createElement('div');w.innerHTML=maintenanceHTML(r);const el=w.firstElementChild;el.querySelector('.del').onclick=()=>{if(confirm('Excluir esta manutenção?')){state.maintenance=state.maintenance.filter(x=>x.id!==r.id);save();renderAll()}};$('maintenanceList').appendChild(el)})}
+function renderHomeMaintenance(){const list=vehicleMaintenance().filter(r=>maintenanceClass(r)).slice(0,3);$('homeMaintenance').innerHTML=list.length?list.map(maintenanceHTML).join(''):'<div class="empty">Nenhuma manutenção próxima ou atrasada.</div>';document.querySelectorAll('#homeMaintenance .del').forEach(b=>b.remove())}
+function openVehicles(){$('vehiclesModal').classList.add('open');renderVehiclesList()}function closeVehicles(){$('vehiclesModal').classList.remove('open')}$('manageVehiclesBtn').onclick=openVehicles;$('closeVehicles').onclick=closeVehicles;$('vehiclesModal').onclick=e=>{if(e.target===$('vehiclesModal'))closeVehicles()}
+function resetVehicleForm(){$('vehicleForm').reset();$('vehicleEditId').value=''}
+function renderVehiclesList(){const wrap=$('vehiclesList');wrap.innerHTML=state.vehicles.length?'':'<div class="empty">Cadastre os dois carros e a moto aqui.</div>';state.vehicles.forEach(v=>{const el=document.createElement('div');el.className='item vehicle-card';el.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="type-icon">${icon(v.type)}</div><div><strong>${v.name}</strong><div class="date">${[v.model,v.year,v.plate].filter(Boolean).join(' • ')||'Sem detalhes'}</div><div class="date">KM atual: ${num(currentKm(v.id),0)}</div></div></div><div class="actions"><button class="secondary edit">Editar</button><button class="danger del">Excluir</button></div>`;el.querySelector('.edit').onclick=()=>{ $('vehicleEditId').value=v.id;$('vehicleType').value=v.type;$('vehicleName').value=v.name;$('vehicleModel').value=v.model||'';$('vehicleYear').value=v.year||'';$('vehiclePlate').value=v.plate||'';$('vehicleKm').value=v.km||'';$('vehicleName').focus()};el.querySelector('.del').onclick=()=>{if(confirm('Excluir o veículo e todos os registros dele?')){state.vehicles=state.vehicles.filter(x=>x.id!==v.id);state.fuelings=state.fuelings.filter(x=>x.vehicleId!==v.id);state.maintenance=state.maintenance.filter(x=>x.vehicleId!==v.id);if(state.activeVehicleId===v.id)state.activeVehicleId=state.vehicles[0]?.id||null;save();renderVehiclesList();renderAll()}};wrap.appendChild(el)})}
+$('vehicleForm').onsubmit=e=>{e.preventDefault();const id=$('vehicleEditId').value||String(Date.now()),data={id,type:$('vehicleType').value,name:$('vehicleName').value.trim(),model:$('vehicleModel').value.trim(),year:$('vehicleYear').value,plate:$('vehiclePlate').value.trim().toUpperCase(),km:+$('vehicleKm').value||0};const i=state.vehicles.findIndex(v=>v.id===id);if(i>=0)state.vehicles[i]=data;else state.vehicles.push(data);state.activeVehicleId=id;save();resetVehicleForm();renderVehiclesList();renderAll()}
+$('csvBtn').onclick=()=>{const rows=[['Veículo','Data','KM anterior','KM atual','KM rodados','Litros','Valor','Preço/L','Km/L','Posto','Combustível','Motorista']];state.fuelings.forEach(r=>{const v=state.vehicles.find(x=>x.id===r.vehicleId);rows.push([v?.name||'',r.date,r.prevKm,r.currentKm,r.km,r.liters,r.amount,r.priceLiter,r.avg,r.station,r.fuelType,r.driver])});const csv='\ufeff'+rows.map(row=>row.map(x=>`"${String(x??'').replaceAll('"','""')}"`).join(';')).join('\n');downloadBlob(csv,'fulltank-abastecimentos.csv','text/csv')}
+function downloadBlob(content,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+$('backupBtn').onclick=()=>downloadBlob(JSON.stringify(state,null,2),'fulltank-backup.json','application/json');
+$('restoreFile').onchange=e=>{const file=e.target.files[0];if(!file)return;const rd=new FileReader();rd.onload=()=>{try{state=JSON.parse(rd.result);ensureActive();save();renderAll();closeVehicles();alert('Backup restaurado!')}catch{alert('Arquivo inválido.')}};rd.readAsText(file)}
+$('clearBtn').onclick=()=>{if(confirm('Apagar TODOS os veículos e registros?')){localStorage.removeItem(KEY);state={vehicles:[],activeVehicleId:null,fuelings:[],maintenance:[],theme:'light'};renderAll();renderVehiclesList()}}
+function renderAll(){ensureActive();renderVehicleSwitch();fillVehicleSelects();renderDashboard();renderHistory();renderMaintenance();setTheme();const v=activeVehicle();if(v){$('prevKm').value=currentKm(v.id)||''}else{$('prevKm').value=''}calcFuel();save()}
+window.addEventListener('resize',drawChart);
+renderAll();
+if(!state.vehicles.length)setTimeout(openVehicles,350);
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
 </script>
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{});}</script>
 </body>
 </html>

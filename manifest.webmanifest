@@ -1,7 +1,8 @@
 {
   "name": "FullTank",
   "short_name": "FullTank",
-  "start_url": "./index.html",
+  "description": "Controle de abastecimentos, consumo e manutenção de vários veículos.",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f4f7fb",
   "theme_color": "#111827",
