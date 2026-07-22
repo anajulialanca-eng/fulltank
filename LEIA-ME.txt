@@ -1,0 +1,8 @@
+FULLTANK — SITE PRONTO
+
+1. Para testar no computador, abra index.html.
+2. Para publicar, envie todos os arquivos desta pasta para uma hospedagem.
+3. No iPhone, abra o endereço no Safari.
+4. Toque em Compartilhar > Adicionar à Tela de Início.
+
+Os dados ficam salvos no navegador. Faça backup de vez em quando.

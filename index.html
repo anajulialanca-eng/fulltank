@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<meta name="theme-color" content="#111827">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>FullTank</title>
+<style>
+:root{
+  --bg:#f4f7fb;--card:#ffffff;--text:#142033;--muted:#718096;--line:#e6eaf0;
+  --orange:#ff7a00;--orange2:#ffb000;--green:#1f9d55;--danger:#c53030;
+  --shadow:0 18px 50px rgba(20,32,51,.10)
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+background:
+radial-gradient(circle at top right,rgba(255,176,0,.20),transparent 24rem),
+linear-gradient(180deg,#fff8ef 0,#f4f7fb 340px);
+color:var(--text)}
+.app{max-width:760px;margin:auto;padding:calc(22px + env(safe-area-inset-top)) 16px calc(36px + env(safe-area-inset-bottom))}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.brand small{display:block;color:var(--orange);font-size:11px;font-weight:900;letter-spacing:1.35px}
+.brand h1{margin:2px 0 0;font-size:44px;letter-spacing:-2.2px}
+.logo{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,var(--orange),var(--orange2));display:grid;place-items:center;font-size:28px;box-shadow:0 12px 25px rgba(255,122,0,.28)}
+.hero{background:linear-gradient(135deg,#182235,#111827);color:#fff;border-radius:26px;padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,176,0,.16);right:-50px;top:-70px}
+.hero small{opacity:.72;font-size:12px}
+.hero strong{display:block;font-size:36px;margin-top:8px;letter-spacing:-1.4px}
+.hero-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.hero-mini{padding:13px 14px;border-radius:16px;background:rgba(255,255,255,.09);backdrop-filter:blur(8px)}
+.hero-mini span{display:block;font-size:11px;opacity:.72;margin-bottom:5px}.hero-mini b{font-size:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:19px;margin-top:15px;box-shadow:var(--shadow)}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.eyebrow{color:var(--orange);font-size:10px;font-weight:900;letter-spacing:1.25px}
+h2{margin:3px 0 0;font-size:23px;letter-spacing:-.5px}
+button,input{font:inherit}
+button{cursor:pointer}
+.link{border:0;background:transparent;color:var(--orange);font-weight:850;padding:8px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:17px}
+label span{display:block;font-size:12px;font-weight:750;color:var(--muted);margin-bottom:6px}
+input{width:100%;padding:14px 13px;border:1px solid var(--line);border-radius:14px;background:#f8fafc;color:var(--text);outline:none}
+input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,122,0,.12)}
+.preview{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.preview div{padding:14px;border-radius:16px;background:#f8fafc;border:1px solid var(--line)}
+.preview span{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}
+.preview strong{font-size:20px}
+.save{width:100%;border:0;border-radius:15px;padding:15px;color:#fff;font-weight:900;background:linear-gradient(135deg,var(--orange),var(--orange2));box-shadow:0 10px 25px rgba(255,122,0,.25)}
+.msg{min-height:18px;margin:10px 2px 0;font-size:13px}.ok{color:var(--green)}.err{color:var(--danger)}
+.empty{text-align:center;padding:30px 10px;color:var(--muted)}.empty .icon{font-size:34px;margin-bottom:8px}
+.item{margin-top:11px;padding:15px;border:1px solid var(--line);border-radius:17px;background:#fafbfc}
+.item-top{display:flex;justify-content:space-between;align-items:center}
+.item-date{font-size:11px;color:var(--muted);margin-bottom:4px}.item strong{font-size:19px}
+.del{border:0;background:transparent;color:var(--danger);font-weight:800}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:7px 12px;margin-top:11px;color:var(--muted);font-size:13px}
+.actions{display:flex;flex-wrap:wrap;gap:9px}
+.secondary,.danger{border:1px solid var(--line);border-radius:13px;padding:11px 13px;font-weight:800;background:#f8fafc;color:var(--text)}
+.danger{background:#fff5f5;color:var(--danger)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0 6px}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.brand h1{font-size:38px}.hero strong{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand"><small>CONTROLE DE ABASTECIMENTOS</small><h1>FullTank</h1></div>
+  <div class="logo">⛽</div>
+</header>
+
+<section class="hero">
+  <small>MÉDIA MAIS RECENTE</small>
+  <strong id="lastAvg">-- km/L</strong>
+  <div class="hero-row">
+    <div class="hero-mini"><span>TOTAL GASTO</span><b id="totalSpent">R$ 0,00</b></div>
+    <div class="hero-mini"><span>KM REGISTRADOS</span><b id="totalKm">0 km</b></div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div><div class="eyebrow">NOVO REGISTRO</div><h2>Abastecimento</h2></div>
+    <button class="link" id="lastKmBtn">Usar último KM</button>
+  </div>
+
+  <form id="form">
+    <div class="grid">
+      <label><span>KM anterior</span><input id="prev" type="number" step="0.1" required placeholder="Ex.: 42500"></label>
+      <label><span>KM atual</span><input id="curr" type="number" step="0.1" required placeholder="Ex.: 42920"></label>
+      <label><span>Litros abastecidos</span><input id="liters" type="number" step="0.01" required placeholder="Ex.: 42,50"></label>
+      <label><span>Valor total</span><input id="amount" type="number" step="0.01" required placeholder="Ex.: 255,00"></label>
+      <label><span>Preço por litro</span><input id="ppl" readonly placeholder="Automático"></label>
+      <label><span>Data</span><input id="date" type="date" required></label>
+      <label><span>Posto</span><input id="station" type="text" placeholder="Ex.: Posto Avenida"></label>
+      <label><span>Combustível</span><input id="fuel" type="text" placeholder="Ex.: Gasolina"></label>
+    </div>
+
+    <div class="preview">
+      <div><span>KM rodados</span><strong id="kmPreview">0 km</strong></div>
+      <div><span>Média</span><strong id="avgPreview">0 km/L</strong></div>
+    </div>
+
+    <button class="save">Salvar abastecimento</button>
+    <p id="msg" class="msg"></p>
+  </form>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div><div class="eyebrow">SEUS DADOS</div><h2>Histórico</h2></div>
+    <button class="link" id="exportBtn">Exportar</button>
+  </div>
+  <div id="empty" class="empty"><div class="icon">🚗</div>Nenhum abastecimento cadastrado ainda.</div>
+  <div id="list"></div>
+</section>
+
+<section class="panel">
+  <div class="actions">
+    <button class="secondary" id="backupBtn">Baixar backup</button>
+    <label class="secondary" style="cursor:pointer">Restaurar backup<input id="restore" type="file" accept=".json" hidden></label>
+    <button class="danger" id="clearBtn">Apagar tudo</button>
+  </div>
+</section>
+
+<footer>FullTank • seus dados ficam salvos neste navegador</footer>
+</div>
+
+<script>
+const KEY='fulltank_dados_v2';
+let records=JSON.parse(localStorage.getItem(KEY)||'[]');
+const $=id=>document.getElementById(id);
+const money=v=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0);
+const num=(v,d=1)=>new Intl.NumberFormat('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v||0);
+const today=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+$('date').value=today();
+
+function calc(){
+ const p=+$('prev').value,c=+$('curr').value,l=+$('liters').value,a=+$('amount').value;
+ const km=c>p?c-p:0,avg=l>0?km/l:0,ppl=l>0?a/l:0;
+ $('kmPreview').textContent=num(km,1)+' km';
+ $('avgPreview').textContent=num(avg,2)+' km/L';
+ $('ppl').value=ppl>0?money(ppl):'';
+ return {p,c,l,a,km,avg,ppl};
+}
+['prev','curr','liters','amount'].forEach(id=>$(id).addEventListener('input',calc));
+
+function persist(){localStorage.setItem(KEY,JSON.stringify(records))}
+function latest(){return [...records].sort((a,b)=>b.createdAt-a.createdAt)[0]}
+function useLastKm(){const r=latest();if(r){$('prev').value=r.c;calc()}}
+$('lastKmBtn').onclick=useLastKm;
+
+function render(){
+ const sorted=[...records].sort((a,b)=>b.createdAt-a.createdAt);
+ const last=sorted[0];
+ $('lastAvg').textContent=last?num(last.avg,2)+' km/L':'-- km/L';
+ $('totalSpent').textContent=money(records.reduce((s,r)=>s+r.a,0));
+ $('totalKm').textContent=num(records.reduce((s,r)=>s+r.km,0),1)+' km';
+ $('empty').style.display=sorted.length?'none':'block';
+ $('list').innerHTML='';
+ sorted.forEach(r=>{
+  const el=document.createElement('div');el.className='item';
+  el.innerHTML=`<div class="item-top"><div><div class="item-date">${new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR')}</div><strong>${num(r.avg,2)} km/L</strong></div><button class="del">Excluir</button></div><div class="details"><span>${num(r.km,1)} km rodados</span><span>${num(r.l,2)} litros</span><span>${money(r.a)}</span><span>${money(r.ppl)}/L</span><span>${r.station||'Posto não informado'}</span><span>${r.fuel||'Combustível não informado'}</span></div>`;
+  el.querySelector('.del').onclick=()=>{if(confirm('Excluir este registro?')){records=records.filter(x=>x.id!==r.id);persist();render();useLastKm()}};
+  $('list').appendChild(el);
+ });
+}
+
+$('form').onsubmit=e=>{
+ e.preventDefault();const x=calc();
+ if(x.c<=x.p){$('msg').textContent='O KM atual precisa ser maior que o anterior.';$('msg').className='msg err';return}
+ records.push({...x,id:Date.now(),date:$('date').value,station:$('station').value.trim(),fuel:$('fuel').value.trim(),createdAt:Date.now()});
+ persist();render();$('form').reset();$('date').value=today();$('prev').value=x.c;calc();
+ $('msg').textContent='Abastecimento salvo com sucesso!';$('msg').className='msg ok';
+};
+
+function download(name,text,type){
+ const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);
+}
+$('backupBtn').onclick=()=>download('fulltank-backup.json',JSON.stringify(records,null,2),'application/json');
+$('exportBtn').onclick=()=>{
+ const rows=[['Data','KM anterior','KM atual','KM rodados','Litros','Valor','Preço/L','Média km/L','Posto','Combustível'],...records.map(r=>[r.date,r.p,r.c,r.km,r.l,r.a,r.ppl,r.avg,r.station||'',r.fuel||''])];
+ download('fulltank-historico.csv','\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(';')).join('\n'),'text/csv;charset=utf-8');
+};
+$('restore').onchange=async e=>{
+ try{const d=JSON.parse(await e.target.files[0].text());if(!Array.isArray(d))throw 0;records=d;persist();render();useLastKm();alert('Backup restaurado!')}catch{alert('Arquivo inválido.')}
+ e.target.value='';
+};
+$('clearBtn').onclick=()=>{if(confirm('Apagar todos os registros?')){records=[];persist();render();$('form').reset();$('date').value=today();calc()}};
+
+render();useLastKm();calc();
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{});}</script>
+</body>
+</html>
