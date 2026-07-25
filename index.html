@@ -72,8 +72,9 @@
 
     <main>
       <section class="page active" data-page="home">
-        <div class="panel"><div class="panel-head"><div><div class="eyebrow">RESUMO DO VEÍCULO</div><h2>Visão geral</h2></div><button class="link" data-go="fuel">+ Abastecer</button></div><div class="cards3"><div class="mini"><span>MELHOR MÉDIA</span><strong id="bestAvg">--</strong></div><div class="mini"><span>TOTAL DE LITROS</span><strong id="totalLiters">0 L</strong></div><div class="mini"><span>TOTAL GASTO</span><strong id="allSpent">R$ 0,00</strong></div></div></div>
+        <div class="panel"><div class="panel-head"><div><div class="eyebrow">RESUMO DO VEÍCULO</div><h2>Visão geral</h2></div><button class="link" data-go="fuel">+ Abastecer</button></div><div class="cards3"><div class="mini"><span>🏆 MELHOR MÉDIA</span><strong id="bestAvg">--</strong></div><div class="mini"><span>⛽ TOTAL DE LITROS</span><strong id="totalLiters">0 L</strong></div><div class="mini"><span>💰 TOTAL GASTO</span><strong id="allSpent">R$ 0,00</strong></div><div class="mini"><span>📅 GASTO NO ANO</span><strong id="yearSpent">R$ 0,00</strong></div><div class="mini"><span>📊 MÉDIA MENSAL</span><strong id="monthlyAverage">R$ 0,00</strong></div><div class="mini"><span>🧾 ABASTECIMENTOS NO ANO</span><strong id="yearFuelCount">0</strong></div></div></div>
         <div class="panel"><div class="panel-head"><div><div class="eyebrow">EVOLUÇÃO</div><h2>Média de consumo</h2></div></div><canvas id="avgChart"></canvas><div id="chartEmpty" class="empty">Salve pelo menos dois abastecimentos neste veículo.</div></div>
+        <div class="panel"><div class="panel-head"><div><div class="eyebrow">GASTOS</div><h2>Últimos 12 meses</h2></div></div><canvas id="expenseChart"></canvas><div id="expenseChartEmpty" class="empty">Os gastos aparecerão depois do primeiro abastecimento.</div></div>
         <div class="panel"><div class="panel-head"><div><div class="eyebrow">RESUMO RÁPIDO</div><h2>Últimos cuidados</h2></div><button class="link" data-go="maintenance">Adicionar cuidado</button></div><div class="cards3 care-cards"><div class="mini"><span>ÚLTIMO ABASTECIMENTO</span><strong id="lastFuelSummary">—</strong></div><div class="mini"><span>ÚLTIMA LAVAGEM</span><strong id="lastWashSummary">—</strong></div><div class="mini"><span>PRÓXIMO CUIDADO</span><strong id="nextCareSummary">—</strong></div></div></div>
         <div class="panel"><div class="panel-head"><div><div class="eyebrow">PRÓXIMOS CUIDADOS</div><h2>Manutenções</h2></div><button class="link" data-go="maintenance">Ver todas</button></div><div id="homeMaintenance"></div></div>
       </section>
@@ -87,6 +88,7 @@
             <label><span>Preço por litro</span><input id="priceLiter" readonly></label><label><span>Posto</span><input id="station" placeholder="Ex.: Shell, Ipiranga..."></label>
             <label><span>Combustível</span><select id="fuelType"><option>Gasolina comum</option><option>Gasolina aditivada</option><option>Etanol</option><option>Diesel</option><option>GNV</option></select></label><label><span>Forma de pagamento</span><select id="paymentMethod"><option>Pix</option><option>Cartão de crédito</option><option>Cartão de débito</option><option>Dinheiro</option><option>Outro</option></select></label><label><span>Motorista</span><input id="driver" placeholder="Preenchido com seu nome"></label>
             <label class="checkrow span2"><input id="fullTank" type="checkbox" checked><span>Completei o tanque</span></label>
+            <label class="span2 receipt-field"><span>📷 Foto da nota fiscal (opcional)</span><input id="receiptPhoto" type="file" accept="image/*" capture="environment"><small>A imagem será reduzida para sincronizar com a garagem.</small><img id="receiptPreview" class="receipt-preview hidden" alt="Prévia da nota fiscal"></label>
             <label class="span2"><span>Observações</span><textarea id="fuelNotes" placeholder="Viagem, trânsito, calibragem..."></textarea></label>
           </div><div class="preview"><div><span>KM RODADOS</span><strong id="kmPreview">0 km</strong></div><div><span>CONSUMO</span><strong id="avgPreview">0 km/L</strong></div><div><span>CUSTO / KM</span><strong id="costPreview">R$ 0,00</strong></div></div><button class="primary">Salvar abastecimento</button><div id="fuelMsg" class="msg"></div></form>
         </div>
@@ -124,7 +126,7 @@
 
   <div class="modal" id="profileModal"><div class="sheet"><div class="sheethead"><div><div class="eyebrow">CONTA E GARAGEM</div><h2 id="profileName">Perfil</h2></div><button class="close" data-close="profileModal">×</button></div>
     <div class="profile-box"><span>Garagem</span><strong id="profileGarage">—</strong><span>Código para convidar</span><div class="invite-line"><strong id="profileCode">—</strong><button id="copyCode" class="secondary">Copiar</button></div><span>Seu acesso</span><strong id="profileRole">—</strong></div>
-    <button id="manageVehiclesBtn" class="secondary full">🚘 Gerenciar veículos</button><button id="logoutBtn" class="danger full">Sair da conta</button>
+    <button id="manageVehiclesBtn" class="secondary full">🚘 Gerenciar veículos</button><button id="notificationBtn" class="secondary full">🔔 Ativar lembretes neste aparelho</button><button id="logoutBtn" class="danger full">Sair da conta</button>
   </div></div>
 
   <script type="module" src="js/app.js"></script>

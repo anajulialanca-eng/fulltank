@@ -31,3 +31,6 @@ FULLTANK V6
 - Mais tipos de manutenção
 - Data e local do serviço
 - Resumo rápido no painel
+
+
+V7: foto comprimida da nota fiscal sincronizada no Firestore, gastos mensais/anuais, gráfico dos últimos 12 meses e lembretes no navegador ao abrir o app. Observação: notificações não são em segundo plano; o app precisa ser aberto para verificar os cuidados.
