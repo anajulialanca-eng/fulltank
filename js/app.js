@@ -42,6 +42,52 @@ function drawChart(){const canvas=$('avgChart'),data=[...vehicleFuelings()].sort
 
 $('fuelDate').value=today();function numInput(v){return String(Number(v)||'').replace('.',',')}function calcFuel(){const p=parseBR($('prevKm').value),c=parseBR($('newKm').value),l=parseBR($('liters').value),a=parseBR($('amount').value),km=c>p?c-p:0,avg=l>0?km/l:0,priceLiter=l>0?a/l:0,costKm=km>0?a/km:0;$('kmPreview').textContent=num(km,1)+' km';$('avgPreview').textContent=num(avg,2)+' km/L';$('costPreview').textContent=money(costKm);$('priceLiter').value=priceLiter?money(priceLiter):'';return{p,c,l,a,km,avg,priceLiter,costKm}}
 ['prevKm','newKm','liters','amount'].forEach(id=>$(id).addEventListener('input',calcFuel));$('lastKmBtn').onclick=()=>{$('prevKm').value=numInput(currentKm($('fuelVehicle').value));calcFuel()};$('fuelVehicle').onchange=()=>{$('prevKm').value=numInput(currentKm($('fuelVehicle').value));calcFuel()};
+
+// Foto da nota: compatível com celular e reduzida para caber no Firestore.
+$('receiptPhoto').addEventListener('change',async e=>{
+  const file=e.target.files?.[0];
+  if(!file){$('receiptPreview').src='';hide('receiptPreview');return}
+  if(!file.type.startsWith('image/')){msg('fuelMsg','Escolha uma imagem válida.','err');e.target.value='';return}
+  msg('fuelMsg','Preparando a foto...');
+  try{
+    const dataUrl=await compressReceipt(file);
+    $('receiptPreview').src=dataUrl;
+    show('receiptPreview');
+    msg('fuelMsg','Foto pronta para ser salva.','ok');
+  }catch(err){
+    console.error(err);
+    $('receiptPreview').src='';hide('receiptPreview');e.target.value='';
+    msg('fuelMsg','Não consegui abrir essa foto. Tente tirar outra foto ou escolher uma imagem JPG/PNG.','err');
+  }
+});
+
+async function compressReceipt(file){
+  const source=URL.createObjectURL(file);
+  try{
+    const img=await new Promise((resolve,reject)=>{
+      const el=new Image();
+      el.onload=()=>resolve(el);
+      el.onerror=()=>reject(new Error('Imagem não suportada'));
+      el.src=source;
+    });
+    let width=img.naturalWidth||img.width,height=img.naturalHeight||img.height;
+    const maxSide=1280;
+    if(Math.max(width,height)>maxSide){const scale=maxSide/Math.max(width,height);width=Math.round(width*scale);height=Math.round(height*scale)}
+    const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
+    const ctx=canvas.getContext('2d',{alpha:false});ctx.fillStyle='#fff';ctx.fillRect(0,0,width,height);ctx.drawImage(img,0,0,width,height);
+    let quality=.74,data=canvas.toDataURL('image/jpeg',quality);
+    // Firestore limita cada documento a ~1 MiB; mantemos a foto abaixo de ~520 KB.
+    while(data.length>700000&&quality>.38){quality-=.08;data=canvas.toDataURL('image/jpeg',quality)}
+    if(data.length>850000){
+      const scale=.72,w=Math.max(480,Math.round(width*scale)),h=Math.max(480,Math.round(height*scale));
+      const small=document.createElement('canvas');small.width=w;small.height=h;
+      const c=small.getContext('2d',{alpha:false});c.fillStyle='#fff';c.fillRect(0,0,w,h);c.drawImage(canvas,0,0,w,h);
+      data=small.toDataURL('image/jpeg',.55);
+    }
+    if(data.length>900000)throw new Error('Imagem ainda muito grande');
+    return data;
+  }finally{URL.revokeObjectURL(source)}
+}
 $('fuelForm').onsubmit=async e=>{e.preventDefault();const vehicleId=$('fuelVehicle').value,x=calcFuel();if(!vehicleId)return alert('Cadastre um veículo primeiro.');if(x.c<=x.p)return msg('fuelMsg','O KM atual precisa ser maior que o anterior.','err');if(x.l<=0||x.a<=0)return msg('fuelMsg','Informe litros e valor válidos.','err');try{const receiptImage=$('receiptPreview').src?.startsWith('data:image')?$('receiptPreview').src:'';const data={vehicleId,date:$('fuelDate').value,prevKm:x.p,currentKm:x.c,liters:x.l,amount:x.a,km:x.km,avg:x.avg,priceLiter:x.priceLiter,costKm:x.costKm,station:$('station').value.trim(),fuelType:$('fuelType').value,driver:$('driver').value.trim()||profile.name,fullTank:$('fullTank').checked,paymentMethod:$('paymentMethod').value,notes:$('fuelNotes').value.trim(),receiptImage,createdBy:user.uid,createdByName:profile.name,createdAt:serverTimestamp()};const batch=writeBatch(db);batch.set(doc(collection(db,'garages',garage.id,'fuelings')),data);batch.update(doc(db,'garages',garage.id,'vehicles',vehicleId),{km:x.c,updatedAt:serverTimestamp()});await batch.commit();e.target.reset();$('fuelDate').value=today();$('fullTank').checked=true;$('receiptPreview').src='';hide('receiptPreview');msg('fuelMsg','Abastecimento salvo e sincronizado.','ok');go('home')}catch(err){console.error(err);msg('fuelMsg','Não foi possível salvar.','err')}};
 function renderHistory(){const vehicleId=$('historyVehicle').value||state.activeVehicleId,q=$('searchHistory').value.toLowerCase(),list=[...vehicleFuelings(vehicleId)].sort((a,b)=>-sortCreated(a,b)).filter(r=>!q||[r.station,r.fuelType,r.driver,r.notes,r.createdByName].join(' ').toLowerCase().includes(q));$('historyList').innerHTML=list.length?'':'<div class="empty">Nenhum abastecimento encontrado.</div>';list.forEach(r=>{const el=document.createElement('div');el.className='item';el.innerHTML=`<div class="itemtop"><div><div class="date">${new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR')} • por ${esc(r.createdByName||r.driver||'usuário')}</div><strong>${num(r.avg,2)} km/L</strong></div>${canDelete(r)?'<button class="link del">Excluir</button>':''}</div><div class="details"><span>${num(r.km,1)} km rodados</span><span>${num(r.liters,2)} litros</span><span>${money(r.amount)}</span><span>${money(r.priceLiter)}/L</span><span>${esc(r.station||'Posto não informado')}</span><span>${esc(r.driver||'Motorista não informado')}</span><span>${esc(r.paymentMethod||'Pagamento não informado')}</span></div><div class="chips"><span class="chip">${esc(r.fuelType)}</span>${r.fullTank?'<span class="chip">Tanque cheio</span>':''}</div>${r.notes?`<div class="date" style="margin-top:9px">${esc(r.notes)}</div>`:''}${r.receiptImage?`<button class="receipt-open secondary">📷 Ver nota fiscal</button><img class="history-receipt hidden" src="${r.receiptImage}" alt="Nota fiscal">`:''}`;el.querySelector('.receipt-open')?.addEventListener('click',()=>el.querySelector('.history-receipt').classList.toggle('hidden'));el.querySelector('.del')?.addEventListener('click',async()=>{if(confirm('Excluir este abastecimento?'))await deleteDoc(doc(db,'garages',garage.id,'fuelings',r.id))});$('historyList').appendChild(el)})}
 function canDelete(r){return member.role==='admin'||r.createdBy===user.uid}$('searchHistory').oninput=renderHistory;$('historyVehicle').onchange=renderHistory;
