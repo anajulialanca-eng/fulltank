@@ -23,3 +23,11 @@ FUNCIONALIDADES DESTA VERSÃO
 
 IMPORTANTE
 A configuração Firebase do app Web não é uma senha. A proteção dos dados depende principalmente das regras do Firestore.
+
+
+FULLTANK V6
+- Forma de pagamento no abastecimento
+- Lavagem e higienização
+- Mais tipos de manutenção
+- Data e local do serviço
+- Resumo rápido no painel
