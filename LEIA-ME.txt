@@ -1,22 +1,25 @@
-FULLTANK V3 — MULTIVEÍCULOS
+FULLTANK V5 — LOGIN E GARAGEM COMPARTILHADA
 
-Arquivos para enviar ao GitHub:
-- index.html
-- manifest.webmanifest
-- service-worker.js
-- icon-192.png
-- icon-512.png
+ARQUIVOS PARA O GITHUB
+Envie todo o conteúdo desta pasta mantendo as pastas css e js.
 
-Novidades:
-- Cadastro de vários veículos
-- Carro, moto, caminhonete ou outro
-- Abastecimentos separados por veículo
-- Histórico separado por veículo
-- Manutenções separadas por veículo
-- Gráfico e estatísticas de cada veículo
-- Backup, restauração e CSV
-- Modo escuro
-- Instalação na tela inicial do iPhone
+ANTES DE TESTAR
+1. Firebase Console > Firestore > Regras.
+2. Apague as regras existentes.
+3. Cole o conteúdo do arquivo firestore.rules.
+4. Clique em Publicar.
+5. Firebase Console > Authentication > Configurações > Domínios autorizados.
+6. Confirme que anajulialanca-eng.github.io está autorizado. Se não estiver, adicione.
 
-IMPORTANTE:
-Extraia o ZIP e envie os 5 arquivos principais para a raiz do repositório no GitHub.
+FUNCIONALIDADES DESTA VERSÃO
+- Criar conta, entrar e recuperar senha.
+- Criar garagem ou entrar por código.
+- Veículos, abastecimentos e manutenções sincronizados.
+- Histórico identifica quem cadastrou.
+- Administrador pode excluir veículos e qualquer registro.
+- Membro pode excluir os próprios abastecimentos/manutenções.
+- Valores aceitam 1750,35 e 1.750,35.
+- Dados separados por garagem.
+
+IMPORTANTE
+A configuração Firebase do app Web não é uma senha. A proteção dos dados depende principalmente das regras do Firestore.
