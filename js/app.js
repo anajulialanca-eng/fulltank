@@ -88,8 +88,195 @@ async function compressReceipt(file){
     return data;
   }finally{URL.revokeObjectURL(source)}
 }
-$('fuelForm').onsubmit=async e=>{e.preventDefault();const vehicleId=$('fuelVehicle').value,x=calcFuel();if(!vehicleId)return alert('Cadastre um veículo primeiro.');if(x.c<=x.p)return msg('fuelMsg','O KM atual precisa ser maior que o anterior.','err');if(x.l<=0||x.a<=0)return msg('fuelMsg','Informe litros e valor válidos.','err');try{const receiptImage=$('receiptPreview').src?.startsWith('data:image')?$('receiptPreview').src:'';const data={vehicleId,date:$('fuelDate').value,prevKm:x.p,currentKm:x.c,liters:x.l,amount:x.a,km:x.km,avg:x.avg,priceLiter:x.priceLiter,costKm:x.costKm,station:$('station').value.trim(),fuelType:$('fuelType').value,driver:$('driver').value.trim()||profile.name,fullTank:$('fullTank').checked,paymentMethod:$('paymentMethod').value,notes:$('fuelNotes').value.trim(),receiptImage,createdBy:user.uid,createdByName:profile.name,createdAt:serverTimestamp()};const batch=writeBatch(db);batch.set(doc(collection(db,'garages',garage.id,'fuelings')),data);batch.update(doc(db,'garages',garage.id,'vehicles',vehicleId),{km:x.c,updatedAt:serverTimestamp()});await batch.commit();e.target.reset();$('fuelDate').value=today();$('fullTank').checked=true;$('receiptPreview').src='';hide('receiptPreview');msg('fuelMsg','Abastecimento salvo e sincronizado.','ok');go('home')}catch(err){console.error(err);msg('fuelMsg','Não foi possível salvar.','err')}};
-function renderHistory(){const vehicleId=$('historyVehicle').value||state.activeVehicleId,q=$('searchHistory').value.toLowerCase(),list=[...vehicleFuelings(vehicleId)].sort((a,b)=>-sortCreated(a,b)).filter(r=>!q||[r.station,r.fuelType,r.driver,r.notes,r.createdByName].join(' ').toLowerCase().includes(q));$('historyList').innerHTML=list.length?'':'<div class="empty">Nenhum abastecimento encontrado.</div>';list.forEach(r=>{const el=document.createElement('div');el.className='item';el.innerHTML=`<div class="itemtop"><div><div class="date">${new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR')} • por ${esc(r.createdByName||r.driver||'usuário')}</div><strong>${num(r.avg,2)} km/L</strong></div>${canDelete(r)?'<button class="link del">Excluir</button>':''}</div><div class="details"><span>${num(r.km,1)} km rodados</span><span>${num(r.liters,2)} litros</span><span>${money(r.amount)}</span><span>${money(r.priceLiter)}/L</span><span>${esc(r.station||'Posto não informado')}</span><span>${esc(r.driver||'Motorista não informado')}</span><span>${esc(r.paymentMethod||'Pagamento não informado')}</span></div><div class="chips"><span class="chip">${esc(r.fuelType)}</span>${r.fullTank?'<span class="chip">Tanque cheio</span>':''}</div>${r.notes?`<div class="date" style="margin-top:9px">${esc(r.notes)}</div>`:''}${r.receiptImage?`<button class="receipt-open secondary">📷 Ver nota fiscal</button><img class="history-receipt hidden" src="${r.receiptImage}" alt="Nota fiscal">`:''}`;el.querySelector('.receipt-open')?.addEventListener('click',()=>el.querySelector('.history-receipt').classList.toggle('hidden'));el.querySelector('.del')?.addEventListener('click',async()=>{if(confirm('Excluir este abastecimento?'))await deleteDoc(doc(db,'garages',garage.id,'fuelings',r.id))});$('historyList').appendChild(el)})}
+$('fuelForm').onsubmit=async e=>{
+  e.preventDefault();
+
+  const vehicleId=$('fuelVehicle').value;
+  const x=calcFuel();
+  const editId=$('fuelForm').dataset.editId;
+
+  if(!vehicleId)return alert('Cadastre um veículo primeiro.');
+  if(x.c<=x.p)return msg('fuelMsg','O KM atual precisa ser maior que o anterior.','err');
+  if(x.l<=0||x.a<=0)return msg('fuelMsg','Informe litros e valor válidos.','err');
+
+  try{
+    const receiptImage=$('receiptPreview').src?.startsWith('data:image')
+      ?$('receiptPreview').src
+      :'';
+
+    const data={
+      vehicleId,
+      date:$('fuelDate').value,
+      prevKm:x.p,
+      currentKm:x.c,
+      liters:x.l,
+      amount:x.a,
+      km:x.km,
+      avg:x.avg,
+      priceLiter:x.priceLiter,
+      costKm:x.costKm,
+      station:$('station').value.trim(),
+      fuelType:$('fuelType').value,
+      driver:$('driver').value.trim()||profile.name,
+      fullTank:$('fullTank').checked,
+      paymentMethod:$('paymentMethod').value,
+      notes:$('fuelNotes').value.trim(),
+      receiptImage
+    };
+
+    if(editId){
+      await updateDoc(
+        doc(db,'garages',garage.id,'fuelings',editId),
+        {
+          ...data,
+          updatedAt:serverTimestamp()
+        }
+      );
+
+      delete $('fuelForm').dataset.editId;
+
+      msg('fuelMsg','Abastecimento atualizado com sucesso.','ok');
+    }else{
+      const batch=writeBatch(db);
+
+      batch.set(
+        doc(collection(db,'garages',garage.id,'fuelings')),
+        {
+          ...data,
+          createdBy:user.uid,
+          createdByName:profile.name,
+          createdAt:serverTimestamp()
+        }
+      );
+
+      batch.update(
+        doc(db,'garages',garage.id,'vehicles',vehicleId),
+        {
+          km:x.c,
+          updatedAt:serverTimestamp()
+        }
+      );
+
+      await batch.commit();
+
+      msg('fuelMsg','Abastecimento salvo e sincronizado.','ok');
+    }
+
+    e.target.reset();
+    $('fuelDate').value=today();
+    $('fullTank').checked=true;
+    $('receiptPreview').src='';
+    hide('receiptPreview');
+
+    setTimeout(()=>go('history'),400);
+
+  }catch(err){
+    console.error(err);
+    msg('fuelMsg','Não foi possível salvar.','err');
+  }
+};
+function renderHistory(){
+  const vehicleId=$('historyVehicle').value||state.activeVehicleId;
+  const q=$('searchHistory').value.toLowerCase();
+
+  const list=[...vehicleFuelings(vehicleId)]
+    .sort((a,b)=>-sortCreated(a,b))
+    .filter(r=>!q||[r.station,r.fuelType,r.driver,r.notes,r.createdByName]
+    .join(' ').toLowerCase().includes(q));
+
+  $('historyList').innerHTML=list.length?'':'<div class="empty">Nenhum abastecimento encontrado.</div>';
+
+  list.forEach(r=>{
+    const el=document.createElement('div');
+    el.className='item';
+
+    el.innerHTML=`
+      <div class="itemtop">
+        <div>
+          <div class="date">
+            ${new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR')}
+            • por ${esc(r.createdByName||r.driver||'usuário')}
+          </div>
+          <strong>${num(r.avg,2)} km/L</strong>
+        </div>
+
+        ${canDelete(r)?`
+          <div class="actions">
+            <button class="link edit-fueling">Editar</button>
+            <button class="link del">Excluir</button>
+          </div>
+        `:''}
+      </div>
+
+      <div class="details">
+        <span>${num(r.km,1)} km rodados</span>
+        <span>${num(r.liters,2)} litros</span>
+        <span>${money(r.amount)}</span>
+        <span>${money(r.priceLiter)}/L</span>
+        <span>${esc(r.station||'Posto não informado')}</span>
+        <span>${esc(r.driver||'Motorista não informado')}</span>
+        <span>${esc(r.paymentMethod||'Pagamento não informado')}</span>
+      </div>
+
+      <div class="chips">
+        <span class="chip">${esc(r.fuelType)}</span>
+        ${r.fullTank?'<span class="chip">Tanque cheio</span>':''}
+      </div>
+
+      ${r.notes?`<div class="date" style="margin-top:9px">${esc(r.notes)}</div>`:''}
+
+      ${r.receiptImage?`
+        <button class="receipt-open secondary">📷 Ver nota fiscal</button>
+        <img class="history-receipt hidden" src="${r.receiptImage}" alt="Nota fiscal">
+      `:''}
+    `;
+
+    el.querySelector('.receipt-open')?.addEventListener('click',()=>{
+      el.querySelector('.history-receipt').classList.toggle('hidden');
+    });
+
+    el.querySelector('.edit-fueling')?.addEventListener('click',()=>{
+      editFueling(r);
+    });
+
+    el.querySelector('.del')?.addEventListener('click',async()=>{
+      if(confirm('Tem certeza que deseja excluir este abastecimento?')){
+        await deleteDoc(doc(db,'garages',garage.id,'fuelings',r.id));
+      }
+    });
+
+    $('historyList').appendChild(el);
+  });
+}
+function editFueling(r){
+  $('fuelVehicle').value=r.vehicleId;
+  $('fuelDate').value=r.date||today();
+  $('prevKm').value=numInput(r.prevKm);
+  $('newKm').value=numInput(r.currentKm);
+  $('liters').value=numInput(r.liters);
+  $('amount').value=numInput(r.amount);
+  $('station').value=r.station||'';
+  $('fuelType').value=r.fuelType||'Gasolina';
+  $('driver').value=r.driver||profile.name;
+  $('fullTank').checked=!!r.fullTank;
+  $('paymentMethod').value=r.paymentMethod||'';
+  $('fuelNotes').value=r.notes||'';
+
+  if(r.receiptImage){
+    $('receiptPreview').src=r.receiptImage;
+    show('receiptPreview');
+  }else{
+    $('receiptPreview').src='';
+    hide('receiptPreview');
+  }
+
+  $('fuelForm').dataset.editId=r.id;
+
+  calcFuel();
+  msg('fuelMsg','Editando abastecimento. Altere os dados e salve.','ok');
+  go('fuel');
+}
+
 function canDelete(r){return member.role==='admin'||r.createdBy===user.uid}$('searchHistory').oninput=renderHistory;$('historyVehicle').onchange=renderHistory;
 
 $('maintenanceForm').onsubmit=async e=>{e.preventDefault();const vehicleId=$('maintenanceVehicle').value;if(!vehicleId)return alert('Cadastre um veículo primeiro.');try{await addDoc(collection(db,'garages',garage.id,'maintenance'),{vehicleId,type:$('maintenanceType').value,desc:$('maintenanceDesc').value.trim(),doneDate:$('maintenanceDoneDate').value||today(),place:$('maintenancePlace').value.trim(),lastKm:parseBR($('maintenanceLastKm').value),nextKm:parseBR($('maintenanceNextKm').value),nextDate:$('maintenanceDate').value,cost:parseBR($('maintenanceCost').value),notes:$('maintenanceNotes').value.trim(),createdBy:user.uid,createdByName:profile.name,createdAt:serverTimestamp()});e.target.reset();msg('maintenanceMsg','Manutenção salva e sincronizada.','ok')}catch(err){console.error(err);msg('maintenanceMsg','Não foi possível salvar.','err')}};
