@@ -9,3 +9,11 @@
 .care-cards .mini strong{font-size:15px;line-height:1.25}.care-cards .mini{min-height:82px}
 
 .receipt-field small{display:block;color:var(--muted);font-size:11px;margin-top:6px}.receipt-preview,.history-receipt{display:block;max-width:100%;max-height:420px;object-fit:contain;border:1px solid var(--line);border-radius:15px;margin-top:10px;background:var(--soft)}.receipt-open{margin-top:10px}.history-receipt{width:100%}
+
+.clickable{cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.clickable:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 22px rgba(15,23,42,.08)}
+.clickable:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 35%,transparent);outline-offset:2px}
+.clickable small{display:block;margin-top:5px;color:var(--muted);font-size:11px;font-weight:600}
+.hero .stat.clickable small{color:rgba(255,255,255,.62)}
+.month-summary-cards{margin:18px 0}
+#monthFuelList{margin-top:16px}
