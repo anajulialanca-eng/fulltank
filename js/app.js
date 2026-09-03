@@ -40,8 +40,8 @@ function renderDashboard(){const v=state.vehicles.find(x=>x.id===state.activeVeh
 function sum(arr,key){return arr.reduce((s,r)=>s+(Number(r[key])||0),0)}function sortCreated(a,b){return (a.createdAt?.seconds||0)-(b.createdAt?.seconds||0)}
 function drawChart(){const canvas=$('avgChart'),data=[...vehicleFuelings()].sort(sortCreated).slice(-10),empty=$('chartEmpty'),dpr=window.devicePixelRatio||1,w=canvas.clientWidth||300,h=240;canvas.width=w*dpr;canvas.height=h*dpr;const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);if(data.length<2){canvas.style.display='none';empty.style.display='block';return}canvas.style.display='block';empty.style.display='none';const vals=data.map(r=>Number(r.avg)||0),min=Math.max(0,Math.min(...vals)-1),max=Math.max(...vals)+1,pad={l:38,r:12,t:20,b:35},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b,styles=getComputedStyle(document.documentElement),line=styles.getPropertyValue('--line'),muted=styles.getPropertyValue('--muted'),accent=styles.getPropertyValue('--accent');ctx.strokeStyle=line;ctx.fillStyle=muted;ctx.font='11px sans-serif';for(let i=0;i<4;i++){const y=pad.t+ch*i/3;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillText(num(max-(max-min)*i/3,1),2,y+4)}const pts=data.map((r,i)=>({x:pad.l+cw*i/(data.length-1),y:pad.t+ch*(max-r.avg)/(max-min)}));ctx.strokeStyle=accent;ctx.lineWidth=3;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();pts.forEach((p,i)=>{ctx.fillStyle=accent;ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fill();ctx.fillStyle=muted;ctx.fillText(new Date(data[i].date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}),Math.max(0,p.x-15),h-10)})}
 
-$('fuelDate').value=today();function numInput(v){return String(Number(v)||'').replace('.',',')}function calcFuel(){const p=parseBR($('prevKm').value),c=parseBR($('newKm').value),l=parseBR($('liters').value),a=parseBR($('amount').value),km=c>p?c-p:0,avg=l>0?km/l:0,priceLiter=l>0?a/l:0,costKm=km>0?a/km:0;$('kmPreview').textContent=num(km,1)+' km';$('avgPreview').textContent=num(avg,2)+' km/L';$('costPreview').textContent=money(costKm);$('priceLiter').value=priceLiter?money(priceLiter):'';return{p,c,l,a,km,avg,priceLiter,costKm}}
-['prevKm','newKm','liters','amount'].forEach(id=>$(id).addEventListener('input',calcFuel));$('lastKmBtn').onclick=()=>{$('prevKm').value=numInput(currentKm($('fuelVehicle').value));calcFuel()};$('fuelVehicle').onchange=()=>{$('prevKm').value=numInput(currentKm($('fuelVehicle').value));calcFuel()};
+$('fuelDate').value=today();function numInput(v){return String(Number(v)||'').replace('.',',')}function calcFuel(){const p=parseBR($('prevKm').value),c=parseBR($('newKm').value),l=parseBR($('liters').value),priceLiter=parseBR($('priceLiter').value),a=l*priceLiter,km=c>p?c-p:0,avg=l>0?km/l:0,costKm=km>0?a/km:0;$('kmPreview').textContent=num(km,1)+' km';$('avgPreview').textContent=num(avg,2)+' km/L';$('costPreview').textContent=money(costKm);$('amount').value=a?money(a):'';return{p,c,l,a,km,avg,priceLiter,costKm}}
+['prevKm','newKm','liters','priceLiter'].forEach(id=>$(id).addEventListener('input',calcFuel));$('lastKmBtn').onclick=()=>{$('prevKm').value=numInput(currentKm($('fuelVehicle').value));calcFuel()};$('fuelVehicle').onchange=()=>{$('prevKm').value=numInput(currentKm($('fuelVehicle').value));calcFuel()};
 
 // Foto da nota: compatível com celular e reduzida para caber no Firestore.
 $('receiptPhoto').addEventListener('change',async e=>{
@@ -97,7 +97,7 @@ $('fuelForm').onsubmit=async e=>{
 
   if(!vehicleId)return alert('Cadastre um veículo primeiro.');
   if(x.c<=x.p)return msg('fuelMsg','O KM atual precisa ser maior que o anterior.','err');
-  if(x.l<=0||x.a<=0)return msg('fuelMsg','Informe litros e valor válidos.','err');
+  if(x.l<=0||x.priceLiter<=0)return msg('fuelMsg','Informe os litros e o preço por litro.','err');
 
   try{
     const receiptImage=$('receiptPreview').src?.startsWith('data:image')
@@ -254,7 +254,7 @@ function editFueling(r){
   $('prevKm').value=numInput(r.prevKm);
   $('newKm').value=numInput(r.currentKm);
   $('liters').value=numInput(r.liters);
-  $('amount').value=numInput(r.amount);
+  $('priceLiter').value=numInput(r.priceLiter||(Number(r.amount)/Number(r.liters)));
   $('station').value=r.station||'';
   $('fuelType').value=r.fuelType||'Gasolina';
   $('driver').value=r.driver||profile.name;
